@@ -1,0 +1,49 @@
+import random
+responses = {
+    "greeting": {
+        "keywords": ["hi", "hello", "hey", "good morning", "good afternoon"],
+        "replies": ["Hello!", "Hi there!", "Hey!", "Nice to see you!", "Greetings!"]
+    },
+    "farewell": {
+        "keywords": ["bye", "goodbye", "see you", "exit", "quit"],
+        "replies": ["Goodbye!", "See you later!", "Take care!", "Bye for now!"]
+    },
+    "how_are_you": {
+        "keywords": ["how are you", "how's it going", "how do you do"],
+        "replies": ["I'm doing great!",  "Feeling fantastic!"]
+    },
+    "name": {
+        "keywords": ["your name", "who are you", "what is your name"],
+        "replies": ["I'm a chatbot made to talk with you!"]
+    },
+    "help": {
+        "keywords": ["help", "what can you do", "commands", "options"],
+        "replies": ["I can respond to greetings, tell you my name, and chat a bit. Try saying hello!"]
+    },
+    "default": {
+        "replies": ["I'm not sure how to respond to that.", "Can you say that another way?", "Interesting... tell me more."]
+    }
+}
+def match_category(user_input):
+    user_input = user_input.lower()
+    for category, data in responses.items():
+        if category == "default":
+            continue
+        for keyword in data["keywords"]:
+            if keyword in user_input:
+                return category
+    return "default"
+def get_response(category):
+    return random.choice(responses[category]["replies"])
+def chatbot():
+    print("Chatbot: Hi! I'm your friendly chatbot. Type 'bye' to end the chat.")
+    while True:
+        user_input = input("You: ").strip()
+        if user_input == "":
+            continue  
+        category = match_category(user_input)
+        response = get_response(category)
+        print(f"Chatbot: {response}")
+        if category == "farewell":
+            break
+chatbot()
